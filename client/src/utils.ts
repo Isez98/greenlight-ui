@@ -75,3 +75,5 @@ export const getCookie = (cookieName: string) => {
     ?.split('=')[1]
   return cookieValue
 }
+
+export const protectedRoutes = ['/', '/createMovie']
