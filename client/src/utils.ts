@@ -30,6 +30,11 @@ export const useAPI: IUseAPI = (
   const reqHeaders = new Headers()
   reqHeaders.append('Content-Type', 'application/json')
 
+  const auth_token = getCookie('auth=')
+  if (auth_token !== undefined) {
+    reqHeaders.append('Authorization', `Bearer ${auth_token}`)
+  }
+
   const { data, refetch } = useQuery({
     queryKey: [`${queryKey}`],
 
@@ -61,4 +66,12 @@ export const useAPI: IUseAPI = (
   }, [loading])
 
   return { loading, queryData, error, refetch }
+}
+
+export const getCookie = (cookieName: string) => {
+  const cookieValue = document.cookie
+    .split(';')
+    .find((row) => row.startsWith(cookieName))
+    ?.split('=')[1]
+  return cookieValue
 }
