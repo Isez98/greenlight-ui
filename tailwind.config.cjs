@@ -4,7 +4,7 @@ module.exports = {
     './client/index.html',
     './client/src/pages/*.{js,ts,jsx,tsx}',
     './client/src/pages/**/*.{js,ts,jsx,tsx}',
-    './client/src/components/**/*.{js,ts.jsx.tsx}',
+    './client/src/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {

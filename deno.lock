@@ -27,6 +27,7 @@
     "npm:@types/react@^18.3.12": "18.3.12",
     "npm:@vitejs/plugin-react@^4.3.3": "4.3.3_vite@5.4.11__@types+node@22.5.4_@babel+core@7.26.0_@types+node@22.5.4",
     "npm:autoprefixer@^10.4.20": "10.4.20_postcss@8.5.1",
+    "npm:formik@*": "2.4.6_react@18.3.1",
     "npm:formik@^2.4.6": "2.4.6_react@18.3.1",
     "npm:path-to-regexp@6.2.1": "6.2.1",
     "npm:postcss@^8.5.1": "8.5.1",
