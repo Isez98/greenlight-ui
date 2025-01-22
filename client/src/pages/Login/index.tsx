@@ -25,12 +25,15 @@ export const Login: React.FC<LoginProps> = ({}) => {
     }
   }, [queryData])
 
-  const loginClick = () => {
-    refetch()
+  useEffect(() => {
     if (loginRes?.authentication_token?.token) {
       document.cookie = `auth=${loginRes.authentication_token.token}; Secure`
       navigate('/')
     }
+  }, [loginRes])
+
+  const loginClick = () => {
+    refetch()
   }
 
   return (

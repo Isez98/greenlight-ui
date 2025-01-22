@@ -76,4 +76,4 @@ export const getCookie = (cookieName: string) => {
   return cookieValue
 }
 
-export const protectedRoutes = ['/', '/createMovie']
+export const protectedRoutes = ['/', '/create-movie']
