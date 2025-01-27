@@ -1,20 +1,27 @@
 import { useState, useEffect } from 'react'
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import {
+  QueryObserverResult,
+  RefetchOptions,
+  useQuery,
+} from '@tanstack/react-query'
 import HTTPMethods from './enums.ts'
+import { useNavigate } from 'react-router-dom'
 
 type IUseAPI = (
   method: HTTPMethods,
   endpoint: string,
   body?: object | null,
   queryKey?: string,
-  enabled?: boolean
+  enabled?: boolean,
 
   // deno-lint-ignore no-explicit-any
 ) => {
   loading: 'error' | 'success' | 'pending'
   queryData: any
   error: any
-  refetch: any
+  refetch: (
+    options?: RefetchOptions,
+  ) => Promise<QueryObserverResult<any, Error>>
 }
 
 export const useAPI: IUseAPI = (
@@ -22,8 +29,9 @@ export const useAPI: IUseAPI = (
   endpoint,
   body = null,
   queryKey = 'data',
-  enabled = true
+  enabled = true,
 ) => {
+  let navigate = useNavigate()
   const [queryData, setData] = useState(null)
   const [loading, setLoading] = useState('pending')
   const [error, setError] = useState(null)
@@ -48,10 +56,13 @@ export const useAPI: IUseAPI = (
         const dataResponse = await res.json()
 
         if (!res.ok) {
-          setLoading(dataResponse.status)
+          setLoading('error')
           setError(dataResponse.error || 'Something went wrong')
+          if (res.status === 401) {
+            navigate('/login')
+          }
         }
-        setLoading(dataResponse.status)
+        setLoading('success')
         return dataResponse
       } catch (error) {
         console.log(error)
@@ -76,4 +87,4 @@ export const getCookie = (cookieName: string) => {
   return cookieValue
 }
 
-export const protectedRoutes = ['/', '/create-movie']
+export const protectedRoutes = ['/', '/create-movie', '/view-movie']

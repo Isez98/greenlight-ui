@@ -2,28 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAPI } from '../../utils.ts'
 import HTTPMethods from '../../enums.ts'
+import Wrapper from '../../components/Wrapper/index.tsx'
+import InputField from '../../components/InputField/index.tsx'
+import { Form, Formik } from 'formik'
 
 interface LoginProps {}
 
 export const Login: React.FC<LoginProps> = ({}) => {
   let navigate = useNavigate()
-  const [healthcheck, setHealthcheck] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { queryData = '' } = useAPI(HTTPMethods.GET, '/v1/healthcheck')
+  const [credentials, setCredentials] = useState(null)
   const { queryData: loginRes = '', refetch } = useAPI(
     HTTPMethods.POST,
     '/v1/tokens/authentication',
-    { email, password },
+    credentials,
     'login',
-    false
+    false,
   )
-
-  useEffect(() => {
-    if (queryData !== null) {
-      setHealthcheck(queryData?.environment)
-    }
-  }, [queryData])
 
   useEffect(() => {
     if (loginRes?.authentication_token?.token) {
@@ -32,38 +26,42 @@ export const Login: React.FC<LoginProps> = ({}) => {
     }
   }, [loginRes])
 
-  const loginClick = () => {
-    refetch()
-  }
+  useEffect(() => {
+    if (credentials !== null) {
+      refetch()
+    }
+  }, [credentials])
 
   return (
-    <React.Fragment>
-      <div>{healthcheck}</div>
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.currentTarget.value)
-          }
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          value={password}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.currentTarget.value)
-          }
-        />
-      </div>
-      <button onClick={loginClick}>Login</button>
-    </React.Fragment>
+    <Wrapper>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        onSubmit={async (values) => {
+          setCredentials(values)
+        }}
+      >
+        {({ isSubmitting }: any) => {
+          return (
+            <Form>
+              <div className="mb-4">
+                <InputField name="email" label="Email" type="email" />
+              </div>
+              <div className="mb-4">
+                <InputField name="password" label="Password" type="password" />
+              </div>
+              <div className="flex justify-between items-center">
+                <button
+                  className="px-4 py-2 font-bold text-white bg-blue-500 rounded focus:shadow-outline hover:bg-blue-700 focus:outline-none"
+                  type="submit"
+                  onClick={() => isSubmitting}
+                >
+                  Login
+                </button>
+              </div>
+            </Form>
+          )
+        }}
+      </Formik>
+    </Wrapper>
   )
 }

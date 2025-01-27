@@ -14,10 +14,7 @@ export const InputField = ({
   const [field, { error }] = useField(props)
   return (
     <div>
-      <label
-        className="block mb-2 text-sm font-bold text-gray-700"
-        htmlFor={field.name}
-      >
+      <label className="block mb-2 text-" htmlFor={field.name}>
         {label}
       </label>
       <input

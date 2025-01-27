@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAPI } from '../../utils.ts'
 import HTTPMethods from '../../enums.ts'
 import { Form, Formik } from 'formik'
@@ -8,24 +8,41 @@ import Wrapper from '../../components/Wrapper/index.tsx'
 interface CreateMovieProps {}
 
 export const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
-  // const []
+  const [formData, setFormData] = useState<any>(null)
   const { queryData: createMovieRes = '', refetch } = useAPI(
     HTTPMethods.POST,
     '/v1/movies',
-    null,
+    formData,
     'login',
     false,
   )
+
+  useEffect(() => {
+    if (formData !== null) {
+      refetch()
+    }
+  }, [formData])
+
+  useEffect(() => {
+    console.log(createMovieRes)
+  }, [createMovieRes])
 
   return (
     <React.Fragment>
       <Wrapper variant="regular">
         <p className="font-bold underline">Create Movie</p>
         <Formik
-          initialValues={{ title: '', year: 0, runtime: 0, genre: '' }}
-          onSubmit={() => {}}
+          initialValues={{ title: '', year: 0, runtime: 0, genres: [] }}
+          onSubmit={async (values) => {
+            const refinedVals = {
+              ...values,
+              runtime: `${values.runtime} mins`,
+              genres: [values.genres],
+            }
+            setFormData(refinedVals)
+          }}
         >
-          {({ isSubmitting }) => {
+          {({ isSubmitting }: any) => {
             return (
               <Form>
                 <div className="mb-4">
