@@ -38,9 +38,11 @@ export const useAPI: IUseAPI = (
   const reqHeaders = new Headers()
   reqHeaders.append('Content-Type', 'application/json')
 
-  const auth_token = getCookie('auth=')
-  if (auth_token !== undefined) {
+  const auth_token = getCookie('auth')
+  if (typeof auth_token !== 'undefined') {
     reqHeaders.append('Authorization', `Bearer ${auth_token}`)
+  } else {
+    reqHeaders.delete('Authorization')
   }
 
   const { data, refetch } = useQuery({
@@ -59,6 +61,7 @@ export const useAPI: IUseAPI = (
           setLoading('error')
           setError(dataResponse.error || 'Something went wrong')
           if (res.status === 401) {
+            deleteCookie('auth')
             navigate('/login')
           }
         }
@@ -70,8 +73,8 @@ export const useAPI: IUseAPI = (
     },
     refetchOnWindowFocus: false,
     enabled,
+    gcTime: 30 * 1000,
   })
-  // setData(req.data)
   useEffect(() => {
     setData(data)
   }, [loading])
@@ -79,12 +82,21 @@ export const useAPI: IUseAPI = (
   return { loading, queryData, error, refetch }
 }
 
-export const getCookie = (cookieName: string) => {
-  const cookieValue = document.cookie
-    .split(';')
-    .find((row) => row.startsWith(cookieName))
-    ?.split('=')[1]
-  return cookieValue
+export const getCookie = (name: string) => {
+  const value = `; ${document.cookie}`
+  const parts = value?.split(`; ${name}=`)
+  if (parts.length === 2) {
+    return parts?.pop()?.split(';').shift()
+  } else {
+    return undefined
+  }
+}
+
+export const deleteCookie = (name: string) => {
+  if (getCookie(name)) {
+    document.cookie =
+      name + '=; Path=/;' + '; expires=Thu, 01 Jan 1970 00:00:01 GMT'
+  }
 }
 
 export const protectedRoutes = ['/', '/create-movie', '/view-movie']

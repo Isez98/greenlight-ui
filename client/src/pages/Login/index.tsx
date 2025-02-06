@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAPI } from '../../utils.ts'
+import { deleteCookie, useAPI } from '../../utils.ts'
 import HTTPMethods from '../../enums.ts'
 import Wrapper from '../../components/Wrapper/index.tsx'
 import InputField from '../../components/InputField/index.tsx'
 import { Form, Formik } from 'formik'
 
-interface LoginProps {}
-
-export const Login: React.FC<LoginProps> = ({}) => {
+export const Login = ({}) => {
   let navigate = useNavigate()
   const [credentials, setCredentials] = useState(null)
   const { queryData: loginRes = '', refetch } = useAPI(
@@ -21,10 +19,10 @@ export const Login: React.FC<LoginProps> = ({}) => {
 
   useEffect(() => {
     if (loginRes?.authentication_token?.token) {
-      document.cookie = `auth=${loginRes.authentication_token.token}; Secure`
+      document.cookie = `auth=${loginRes.authentication_token.token}; Path=/; Secure;`
       navigate('/')
     }
-  }, [loginRes])
+  }, [loginRes?.authentication_token?.token])
 
   useEffect(() => {
     if (credentials !== null) {
