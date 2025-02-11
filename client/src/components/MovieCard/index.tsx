@@ -28,11 +28,11 @@ const MovieCard = ({
     >
       <h2 className="text-lg font-bold underline">{title}</h2>
       <p className="my-2">{runtime}</p>
-      <p className="flex justify-evenly my-2 overflow-ellipsis w-100">
+      <div className="flex justify-evenly my-2 overflow-ellipsis w-100">
         {genres.map((item: string, index: number) => {
           return <Tag key={`${title}-${index}`} genre={item} />
         })}
-      </p>
+      </div>
       <sub>{year}</sub>
     </div>
   )

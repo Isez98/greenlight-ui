@@ -5,6 +5,7 @@ import { useAPI } from '../../utils.ts'
 import Wrapper from '../../components/Wrapper/index.tsx'
 import Tag from '../../components/Tag/index.tsx'
 import { Button } from '../../components/Button/index.tsx'
+import { PageFrame } from '../../components/PageFrame/index.tsx'
 
 interface IMovie {
   id: number
@@ -14,7 +15,7 @@ interface IMovie {
   genres: string[]
 }
 
-export const ViewMovie = ({}) => {
+const ViewMovie = ({}) => {
   const { id } = useParams()
   const [movieData, setMovieData] = useState<IMovie>({})
   const { queryData: movie = '' } = useAPI(
@@ -35,11 +36,11 @@ export const ViewMovie = ({}) => {
       <h1>{movieData?.title}</h1>
       <sub>{movieData?.year}</sub>
       <p className="my-3">{movieData?.runtime}</p>
-      <p className="flex justify-between my-3 w-52">
+      <div className="flex justify-between my-3 w-52">
         {movieData?.genres?.map((item: any, index: number) => {
           return <Tag key={`genre-${index}`} genre={item} />
         })}
-      </p>
+      </div>
       <div className="flex justify-between mt-8 w-100">
         <Button onClick={() => {}}>Edit</Button>
         <Button onClick={() => {}} danger>
@@ -47,5 +48,13 @@ export const ViewMovie = ({}) => {
         </Button>
       </div>
     </Wrapper>
+  )
+}
+
+export default () => {
+  return (
+    <PageFrame>
+      <ViewMovie />
+    </PageFrame>
   )
 }

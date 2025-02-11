@@ -37,5 +37,5 @@ export const PrivateRoute: React.FC<IPrivateRouteProps> = ({
     }
   }, [validToken])
 
-  return loading !== 'pending' ? <PageLoader /> : <>{children}</>
+  return loading === 'pending' ? <PageLoader /> : <>{children}</>
 }

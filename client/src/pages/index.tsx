@@ -3,10 +3,11 @@ import { useAPI } from '../utils.ts'
 import HTTPMethods from '../enums.ts'
 import MovieCard from '../components/MovieCard/index.tsx'
 import { useNavigate } from 'react-router-dom'
+import { PageFrame } from '../components/PageFrame/index.tsx'
 
 interface IndexProps {}
 
-export const Index: React.FC<IndexProps> = ({}) => {
+const Index: React.FC<IndexProps> = ({}) => {
   let navigate = useNavigate()
   const [moviesList, setMoviesList] = useState([])
   const { queryData: movies = '' } = useAPI(
@@ -22,7 +23,7 @@ export const Index: React.FC<IndexProps> = ({}) => {
 
   return (
     <React.Fragment>
-      <div className="grid grid-cols-1 gap-x-4 gap-y-16 justify-items-center md:gap-y-32 md:grid-cols-4 md:grid">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-16 justify-items-center mt-8 md:mt-0 md:gap-y-32 md:grid-cols-4 md:grid">
         {moviesList?.map((item: any) => (
           <MovieCard
             key={`movie-${item.id}`}
@@ -38,5 +39,13 @@ export const Index: React.FC<IndexProps> = ({}) => {
         ))}
       </div>
     </React.Fragment>
+  )
+}
+
+export default () => {
+  return (
+    <PageFrame>
+      <Index />
+    </PageFrame>
   )
 }
