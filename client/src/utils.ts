@@ -4,7 +4,7 @@ import {
   RefetchOptions,
   useQuery,
 } from '@tanstack/react-query'
-import HTTPMethods from './enums.ts'
+import HTTPMethods from './enums'
 import { useNavigate } from 'react-router-dom'
 
 type IUseAPI = (
@@ -33,7 +33,9 @@ export const useAPI: IUseAPI = (
 ) => {
   let navigate = useNavigate()
   const [queryData, setData] = useState(null)
-  const [loading, setLoading] = useState('pending')
+  const [loading, setLoading] = useState<'pending' | 'success' | 'error'>(
+    'pending',
+  )
   const [error, setError] = useState(null)
   const reqHeaders = new Headers()
   reqHeaders.append('Content-Type', 'application/json')
@@ -100,3 +102,5 @@ export const deleteCookie = (name: string) => {
 }
 
 export const protectedRoutes = ['/', '/create-movie', '/view-movie']
+
+export const routes = {}

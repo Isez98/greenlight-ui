@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Index from './pages/index.tsx'
-import { Login } from './pages/Login/index.tsx'
+import Index from './pages/index'
+import { Login } from './pages/Login/index'
 import './App.css'
-import { PrivateRoute } from './components/PrivateRoute/index.tsx'
-import { CreateMovie } from './pages/CreateMovie/index.tsx'
-import ViewMovie from './pages/ViewMovie/index.tsx'
+import { PrivateRoute } from './components/PrivateRoute/index'
+import { CreateMovie } from './pages/CreateMovie/index'
+import ViewMovie from './pages/ViewMovie/index'
 
 function App() {
   return (

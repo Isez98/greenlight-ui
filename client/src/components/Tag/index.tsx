@@ -1,10 +1,10 @@
 import React from 'react'
 
-type TagProps = {
+interface TagProps extends React.HTMLAttributes<HTMLDivElement> {
   genre: string
 }
 
-export const Tag = ({ genre, className, ...props }: React.FC<TagProps>) => {
+export const Tag: React.FC<TagProps> = ({ genre, className, ...props }) => {
   return (
     <React.Fragment>
       <div

@@ -1,22 +1,21 @@
 import React from 'react'
-import Tag from '../Tag/index.tsx'
+import Tag from '../Tag/index'
 
-type MovieCardProps = {
-  id: number
+interface MovieCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string
   year: number
   runtime: string
   genres: string[]
 }
 
-const MovieCard = ({
+const MovieCard: React.FC<MovieCardProps> = ({
   title,
   year,
   runtime,
   genres,
-  className,
+  className = '',
   ...props
-}: React.FC<MovieCardProps>) => {
+}) => {
   return (
     <div
       className={

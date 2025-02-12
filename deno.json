@@ -13,6 +13,7 @@
     "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1",
     "@tanstack/react-query": "npm:@tanstack/react-query@^5.64.1",
     "@types/react": "npm:@types/react@^18.3.12",
+    "@uidotdev/usehooks": "npm:@uidotdev/usehooks@^2.4.1",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^4.3.3",
     "autoprefixer": "npm:autoprefixer@^10.4.20",
     "formik": "npm:formik@^2.4.6",
@@ -21,6 +22,7 @@
     "prettier-plugin-tailwindcss": "npm:prettier-plugin-tailwindcss@^0.6.10",
     "react": "npm:react@^18.3.1",
     "react-dom": "npm:react-dom@^18.3.1",
+    "react-icons": "npm:react-icons@^5.4.0",
     "react-router-dom": "npm:react-router-dom@^7.1.1",
     "tailwindcss": "npm:tailwindcss@^3.4.17",
     "vite": "npm:vite@^5.4.11"

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import HTTPMethods from '../../enums.ts'
-import { useAPI } from '../../utils.ts'
-import Wrapper from '../../components/Wrapper/index.tsx'
-import Tag from '../../components/Tag/index.tsx'
-import { Button } from '../../components/Button/index.tsx'
-import { PageFrame } from '../../components/PageFrame/index.tsx'
+import HTTPMethods from '../../enums'
+import { useAPI } from '../../utils'
+import Wrapper from '../../components/Wrapper/index'
+import Tag from '../../components/Tag/index'
+import { Button } from '../../components/Button/index'
+import { PageFrame } from '../../components/PageFrame/index'
 
 interface IMovie {
   id: number
@@ -17,7 +17,13 @@ interface IMovie {
 
 const ViewMovie = ({}) => {
   const { id } = useParams()
-  const [movieData, setMovieData] = useState<IMovie>({})
+  const [movieData, setMovieData] = useState<IMovie>({
+    id: 0,
+    title: '',
+    year: 0,
+    runtime: '0',
+    genres: [],
+  })
   const { queryData: movie = '' } = useAPI(
     HTTPMethods.GET,
     `/v1/movies/${id}`,

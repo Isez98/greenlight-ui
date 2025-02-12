@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useAPI } from '../utils.ts'
-import HTTPMethods from '../enums.ts'
-import MovieCard from '../components/MovieCard/index.tsx'
+import { useAPI } from '../utils'
+import HTTPMethods from '../enums'
+import MovieCard from '../components/MovieCard/index'
 import { useNavigate } from 'react-router-dom'
-import { PageFrame } from '../components/PageFrame/index.tsx'
+import { PageFrame } from '../components/PageFrame/index'
 
 interface IndexProps {}
 

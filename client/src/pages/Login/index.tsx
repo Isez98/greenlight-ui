@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { deleteCookie, useAPI } from '../../utils.ts'
-import HTTPMethods from '../../enums.ts'
-import Wrapper from '../../components/Wrapper/index.tsx'
-import InputField from '../../components/InputField/index.tsx'
+import { deleteCookie, useAPI } from '../../utils'
+import HTTPMethods from '../../enums'
+import Wrapper from '../../components/Wrapper/index'
+import InputField from '../../components/InputField/index'
 import { Form, Formik } from 'formik'
 
 export const Login = ({}) => {
   let navigate = useNavigate()
-  const [credentials, setCredentials] = useState(null)
+  const [credentials, setCredentials] = useState<{
+    email: string
+    password: string
+  } | null>(null)
   const { queryData: loginRes = '', refetch } = useAPI(
     HTTPMethods.POST,
     '/v1/tokens/authentication',

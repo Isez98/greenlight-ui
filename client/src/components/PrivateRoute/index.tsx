@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { protectedRoutes, useAPI } from '../../utils.ts'
-import { PageLoader } from '../PageLoader/index.tsx'
-import HTTPMethods from '../../enums.ts'
+import { protectedRoutes, useAPI } from '../../utils'
+import { PageLoader } from '../PageLoader/index'
+import HTTPMethods from '../../enums'
 
 // deno-lint-ignore no-empty-interface
-interface IPrivateRouteProps {}
+interface IPrivateRouteProps extends React.HTMLAttributes<HTMLBodyElement> {}
 
-export const PrivateRoute: React.FC<IPrivateRouteProps> = ({
-  children,
-}: React.Node) => {
+export const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
   const [validToken, setValidToken] = useState()
   const location = useLocation()
   const navigate = useNavigate()

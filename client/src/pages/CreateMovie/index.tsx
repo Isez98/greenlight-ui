@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useAPI } from '../../utils.ts'
-import HTTPMethods from '../../enums.ts'
+import { useAPI } from '../../utils'
+import HTTPMethods from '../../enums'
 import { Form, Formik } from 'formik'
-import InputField from '../../components/InputField/index.tsx'
-import Wrapper from '../../components/Wrapper/index.tsx'
+import InputField from '../../components/InputField/index'
+import Wrapper from '../../components/Wrapper/index'
 
 interface CreateMovieProps {}
 

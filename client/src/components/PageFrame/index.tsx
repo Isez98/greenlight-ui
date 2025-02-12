@@ -1,15 +1,15 @@
 import React from 'react'
-import { NavBar } from '../NavBar/index.tsx'
-import { Footer } from '../Footer/index.tsx'
+import { NavBar } from '../NavBar/index'
+import { Footer } from '../Footer/index'
 
-type PageFrameProps = {}
+interface PageFrameProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export const PageFrame = ({ children }: React.FC<PageFrameProps>) => {
+export const PageFrame: React.FC<PageFrameProps> = ({ children }) => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col items-stretch h-screen">
       <NavBar />
-      {children}
-      <Footer className="mt-9 flex flex-grow" />
+      <div className="flex-grow">{children}</div>
+      <Footer className="mt-9 h-100 px-6 py-3" />
     </div>
   )
 }

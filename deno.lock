@@ -25,6 +25,7 @@
     "npm:@tanstack/react-query@^5.64.1": "5.64.1_react@18.3.1",
     "npm:@types/node@*": "22.5.4",
     "npm:@types/react@^18.3.12": "18.3.12",
+    "npm:@uidotdev/usehooks@^2.4.1": "2.4.1_react@18.3.1_react-dom@18.3.1__react@18.3.1",
     "npm:@vitejs/plugin-react@^4.3.3": "4.3.3_vite@5.4.11__@types+node@22.5.4_@babel+core@7.26.0_@types+node@22.5.4",
     "npm:autoprefixer@^10.4.20": "10.4.20_postcss@8.5.1",
     "npm:formik@*": "2.4.6_react@18.3.1",
@@ -34,6 +35,7 @@
     "npm:prettier-plugin-tailwindcss@~0.6.10": "0.6.10_prettier@3.4.2",
     "npm:prettier@^3.4.2": "3.4.2",
     "npm:react-dom@^18.3.1": "18.3.1_react@18.3.1",
+    "npm:react-icons@^5.4.0": "5.4.0_react@18.3.1",
     "npm:react-router-dom@^7.1.1": "7.1.1_react@18.3.1_react-dom@18.3.1__react@18.3.1",
     "npm:react@^18.3.1": "18.3.1",
     "npm:tailwindcss@*": "3.4.17_postcss@8.4.49",
@@ -522,6 +524,13 @@
       "dependencies": [
         "@types/prop-types",
         "csstype"
+      ]
+    },
+    "@uidotdev/usehooks@2.4.1_react@18.3.1_react-dom@18.3.1__react@18.3.1": {
+      "integrity": "sha512-1I+RwWyS+kdv3Mv0Vmc+p0dPYH0DTRAo04HLyXReYBL9AeseDWUJyi4THuksBJcu9F0Pih69Ak150VDnqbVnXg==",
+      "dependencies": [
+        "react",
+        "react-dom"
       ]
     },
     "@vitejs/plugin-react@4.3.3_vite@5.4.11__@types+node@22.5.4_@babel+core@7.26.0_@types+node@22.5.4": {
@@ -1045,6 +1054,12 @@
     "react-fast-compare@2.0.4": {
       "integrity": "sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw=="
     },
+    "react-icons@5.4.0_react@18.3.1": {
+      "integrity": "sha512-7eltJxgVt7X64oHh6wSWNwwbKTCtMfK35hcjvJS0yxEAhPM8oUKdS3+kqaW1vicIltw+kR2unHaa12S9pPALoQ==",
+      "dependencies": [
+        "react"
+      ]
+    },
     "react-is@16.13.1": {
       "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
     },
@@ -1319,6 +1334,7 @@
       "npm:@tailwindcss/forms@~0.5.10",
       "npm:@tanstack/react-query@^5.64.1",
       "npm:@types/react@^18.3.12",
+      "npm:@uidotdev/usehooks@^2.4.1",
       "npm:@vitejs/plugin-react@^4.3.3",
       "npm:autoprefixer@^10.4.20",
       "npm:formik@^2.4.6",
@@ -1326,6 +1342,7 @@
       "npm:prettier-plugin-tailwindcss@~0.6.10",
       "npm:prettier@^3.4.2",
       "npm:react-dom@^18.3.1",
+      "npm:react-icons@^5.4.0",
       "npm:react-router-dom@^7.1.1",
       "npm:react@^18.3.1",
       "npm:tailwindcss@^3.4.17",
