@@ -10,18 +10,16 @@ export const Menu: React.FC<MenuProps> = ({ children }) => {
   })
 
   const handleOpenModal = () => {
-    if (isOpen === false) {
-      setIsOpen(true)
-    }
+    setIsOpen(!isOpen)
   }
 
   return (
     <div className="flex justify-end">
-      <div className="absolute" onClick={handleOpenModal}>
+      <div className="absolute" ref={ref} onClick={handleOpenModal}>
         {children}
       </div>
       {isOpen && (
-        <div className="menu mt-6" ref={ref}>
+        <div className="menu mt-6">
           <ul className="bg-slate-500 px-3 py-1 rounded-lg border overflow-auto">
             <li>Account</li>
             <li>Sign out</li>
