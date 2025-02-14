@@ -4,10 +4,11 @@ import HTTPMethods from '../../enums'
 import { Form, Formik } from 'formik'
 import InputField from '../../components/InputField/index'
 import Wrapper from '../../components/Wrapper/index'
+import { PageFrame } from '../../components/PageFrame'
 
 interface CreateMovieProps {}
 
-export const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
+const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
   const [formData, setFormData] = useState<any>(null)
   const { queryData: createMovieRes = '', refetch } = useAPI(
     HTTPMethods.POST,
@@ -30,7 +31,6 @@ export const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
   return (
     <React.Fragment>
       <Wrapper variant="regular">
-        <p className="font-bold underline">Create Movie</p>
         <Formik
           initialValues={{ title: '', year: 0, runtime: 0, genres: [] }}
           onSubmit={async (values) => {
@@ -72,5 +72,13 @@ export const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
         </Formik>
       </Wrapper>
     </React.Fragment>
+  )
+}
+
+export default () => {
+  return (
+    <PageFrame>
+      <CreateMovie />
+    </PageFrame>
   )
 }
