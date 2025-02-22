@@ -103,4 +103,13 @@ export const deleteCookie = (name: string) => {
 
 export const protectedRoutes = ['/', '/create-movie', '/view-movie', '/account']
 
-export const routes = {}
+export const genreOptions: { value: string; label: string }[] = [
+  { value: 'action', label: 'Action' },
+  { value: 'comedy', label: 'Comedy' },
+  { value: 'romance', label: 'Romance' },
+  { value: 'drama', label: 'Drama' },
+  { value: 'fantasy', label: 'Fantasy' },
+  { value: 'animation', label: 'Animation' },
+  { value: 'sci-fi', label: 'Sci-Fi' },
+  { value: 'horror', label: 'Horror' },
+]

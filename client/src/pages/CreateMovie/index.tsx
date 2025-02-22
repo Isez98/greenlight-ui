@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useAPI } from '../../utils'
+import { genreOptions, useAPI } from '../../utils'
 import HTTPMethods from '../../enums'
 import { Form, Formik } from 'formik'
 import InputField from '../../components/InputField/index'
@@ -32,30 +32,54 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
     <React.Fragment>
       <Wrapper variant="regular">
         <Formik
-          initialValues={{ title: '', year: 0, runtime: 0, genres: [] }}
+          initialValues={{ title: '', year: 2025, runtime: 30, genres: [] }}
           onSubmit={async (values) => {
             const refinedVals = {
               ...values,
               runtime: `${values.runtime} mins`,
-              genres: [values.genres],
+              genres: values.genres.map(
+                (genre: { label: string; value: string }) => {
+                  return genre.value
+                },
+              ),
             }
             setFormData(refinedVals)
           }}
         >
-          {({ isSubmitting }: any) => {
+          {({ isSubmitting, setFieldValue }: any) => {
             return (
               <Form>
                 <div className="mb-4">
                   <InputField name="title" label="Title" />
                 </div>
                 <div className="mb-4">
-                  <InputField name="year" label="Year" type="number" />
+                  <InputField
+                    name="year"
+                    label="Year"
+                    type="number"
+                    min={'1900'}
+                    max={'2099'}
+                    step={'1'}
+                  />
                 </div>
                 <div className="mb-4">
-                  <InputField name="runtime" label="Runtime" type="number" />
+                  <InputField
+                    name="runtime"
+                    label="Runtime (mins.)"
+                    type="number"
+                    min={'30'}
+                    max={'300'}
+                    step={'1'}
+                  />
                 </div>
                 <div className="mb-6">
-                  <InputField name="genres" label="Genres" />
+                  <InputField
+                    name="genres"
+                    label="Genres"
+                    multiselect
+                    onChange={(genre) => setFieldValue('genres', genre)}
+                    options={genreOptions}
+                  />
                 </div>
                 <div className="flex justify-between items-center">
                   <button
