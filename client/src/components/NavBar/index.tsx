@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { VscAccount } from 'react-icons/vsc'
 import { Menu } from '../Menu/index'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { NavButton } from '../NavButton/index'
+import { deleteCookie, setCookie } from '../../utils'
 
 type NavBarProps = {}
 
@@ -33,6 +34,10 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
             {
               title: 'Signout',
               className: 'px-3 py-1 hover:bg-red-600',
+              onClick: () => {
+                deleteCookie('auth')
+                window.location.reload()
+              },
             },
           ]}
         >

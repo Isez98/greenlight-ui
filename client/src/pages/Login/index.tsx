@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { deleteCookie, useAPI } from '../../utils'
+import { deleteCookie, getCookie, setCookie, useAPI } from '../../utils'
 import HTTPMethods from '../../enums'
 import Wrapper from '../../components/Wrapper/index'
 import InputField from '../../components/InputField/index'
@@ -22,7 +22,7 @@ export const Login = ({}) => {
 
   useEffect(() => {
     if (loginRes?.authentication_token?.token) {
-      document.cookie = `auth=${loginRes.authentication_token.token}; Path=/; Secure;`
+      setCookie('auth', loginRes.authentication_token.token, 1)
       navigate('/')
     }
   }, [loginRes?.authentication_token?.token])

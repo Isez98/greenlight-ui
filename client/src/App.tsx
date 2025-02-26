@@ -13,10 +13,10 @@ function App() {
     <BrowserRouter>
       <PrivateRoute>
         <Routes>
-          <Route path="/login" element={<Login />} />
           <Route path="/view-movie/:id" element={<ViewMovie />} />
           <Route path="/create-movie" element={<CreateMovie />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Index />} />
         </Routes>
       </PrivateRoute>

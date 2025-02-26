@@ -5,10 +5,12 @@ import { Form, Formik } from 'formik'
 import InputField from '../../components/InputField/index'
 import Wrapper from '../../components/Wrapper/index'
 import { PageFrame } from '../../components/PageFrame'
+import { useNavigate } from 'react-router-dom'
 
 interface CreateMovieProps {}
 
 const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
+  let navigate = useNavigate()
   const [formData, setFormData] = useState<any>(null)
   const { queryData: createMovieRes = '', refetch } = useAPI(
     HTTPMethods.POST,
@@ -25,14 +27,16 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
   }, [formData])
 
   useEffect(() => {
-    console.log(createMovieRes)
+    if (createMovieRes?.movie) {
+      navigate('/')
+    }
   }, [createMovieRes])
 
   return (
     <React.Fragment>
       <Wrapper variant="regular">
         <Formik
-          initialValues={{ title: '', year: 2025, runtime: 30, genres: [] }}
+          initialValues={{ title: '', year: 2025, runtime: 60, genres: [] }}
           onSubmit={async (values) => {
             const refinedVals = {
               ...values,
@@ -58,7 +62,7 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
                     label="Year"
                     type="number"
                     min={'1900'}
-                    max={'2099'}
+                    max={'2040'}
                     step={'1'}
                   />
                 </div>

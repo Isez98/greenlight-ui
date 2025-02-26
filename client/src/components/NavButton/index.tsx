@@ -12,7 +12,7 @@ export const NavButton: React.FC<NavButtonProps> = ({
   value,
   currentPage,
 }) => {
-  const navigate = useNavigate()
+  let navigate = useNavigate()
 
   const handleOnClick = () => {
     if (value !== currentPage) {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import {
+  QueryClient,
   QueryObserverResult,
   RefetchOptions,
   useQuery,
@@ -32,7 +33,7 @@ export const useAPI: IUseAPI = (
   enabled = true,
 ) => {
   let navigate = useNavigate()
-  const [queryData, setData] = useState(null)
+  const [queryData, setData] = useState<any>(null)
   const [loading, setLoading] = useState<'pending' | 'success' | 'error'>(
     'pending',
   )
@@ -47,41 +48,70 @@ export const useAPI: IUseAPI = (
     reqHeaders.delete('Authorization')
   }
 
-  const { data, refetch } = useQuery({
-    queryKey: [`${queryKey}`],
-
-    queryFn: async () => {
-      try {
-        const res = await fetch(`http://localhost:4000${endpoint}`, {
-          method: method,
-          body: body !== null ? JSON.stringify(body) : null,
-          headers: reqHeaders,
-        })
-        const dataResponse = await res.json()
-
-        if (!res.ok) {
-          setLoading('error')
-          setError(dataResponse.error || 'Something went wrong')
-          if (res.status === 401) {
-            deleteCookie('auth')
-            navigate('/login')
-          }
-        }
-        setLoading('success')
-        return dataResponse
-      } catch (error) {
-        console.log(error)
-      }
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: Infinity,
+      },
     },
-    refetchOnWindowFocus: false,
-    enabled,
-    gcTime: 30 * 1000,
   })
+
+  const { data, refetch } = useQuery(
+    {
+      queryKey: [`${queryKey}`],
+
+      queryFn: async () => {
+        try {
+          const res = await fetch(`http://localhost:4000${endpoint}`, {
+            method: method,
+            body: body !== null ? JSON.stringify(body) : null,
+            headers: reqHeaders,
+          })
+          const dataResponse = await res.json()
+
+          if (!res.ok) {
+            setLoading('error')
+            setError(dataResponse.error || 'Something went wrong')
+            if (res.status === 401) {
+              setCookie('auth', '', -1)
+              navigate('/login')
+            }
+          }
+          setLoading('success')
+          return dataResponse
+        } catch (error) {
+          console.log(error)
+        }
+      },
+      refetchOnWindowFocus: false,
+      enabled,
+      gcTime: 30 * 1000,
+    },
+    queryClient,
+  )
+
   useEffect(() => {
     setData(data)
   }, [loading])
 
+  useEffect(() => {
+    if (queryData) {
+      queryClient.removeQueries()
+    }
+  }, [queryData])
+
   return { loading, queryData, error, refetch }
+}
+
+export const setCookie = (name: string, value: string, days: number) => {
+  if (days) {
+    var date = new Date()
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+    var expires = '; expires=' + date.toUTCString()
+  } else {
+    var expires = ''
+  }
+  document.cookie = `${name}=${value}${expires}; Domain=localhost; Path=/; Secure;'`
 }
 
 export const getCookie = (name: string) => {
@@ -95,10 +125,7 @@ export const getCookie = (name: string) => {
 }
 
 export const deleteCookie = (name: string) => {
-  if (getCookie(name)) {
-    document.cookie =
-      name + '=; Path=/;' + '; expires=Thu, 01 Jan 1970 00:00:01 GMT'
-  }
+  setCookie(name, '', -1)
 }
 
 export const protectedRoutes = ['/', '/create-movie', '/view-movie', '/account']
