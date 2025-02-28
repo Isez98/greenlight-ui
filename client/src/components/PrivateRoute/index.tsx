@@ -29,7 +29,7 @@ export const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
     if (!validToken && pathIsProtected && loading !== 'pending') {
       navigate('/login?next=' + location.pathname)
     } else if (validToken && String(location.pathname).includes('login')) {
-      navigate('/')
+      navigate('/list')
     } else {
       navigate('/login')
     }

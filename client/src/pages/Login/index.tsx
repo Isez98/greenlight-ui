@@ -23,7 +23,7 @@ export const Login = ({}) => {
   useEffect(() => {
     if (loginRes?.authentication_token?.token) {
       setCookie('auth', loginRes.authentication_token.token, 1)
-      navigate('/')
+      navigate('/list')
     }
   }, [loginRes?.authentication_token?.token])
 

@@ -17,7 +17,7 @@ function App() {
           <Route path="/create-movie" element={<CreateMovie />} />
           <Route path="/account" element={<Account />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Index />} />
+          <Route path="/list" element={<Index />} />
         </Routes>
       </PrivateRoute>
     </BrowserRouter>

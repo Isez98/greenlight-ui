@@ -14,7 +14,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   return (
     <div className="mb-8 w-100 px-6 py-3 bg-indigo-800 grid grid-cols-3">
       <div className="flex col-span-2">
-        <NavButton title="Home" value="/" currentPage={location.pathname} />
+        <NavButton title="Home" value="/list" currentPage={location.pathname} />
         <NavButton
           title="Add"
           value="/create-movie"

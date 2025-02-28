@@ -128,7 +128,12 @@ export const deleteCookie = (name: string) => {
   setCookie(name, '', -1)
 }
 
-export const protectedRoutes = ['/', '/create-movie', '/view-movie', '/account']
+export const protectedRoutes = [
+  '/list',
+  '/create-movie',
+  '/view-movie',
+  '/account',
+]
 
 export const genreOptions: { value: string; label: string }[] = [
   { value: 'action', label: 'Action' },
