@@ -23,7 +23,7 @@ const Index: React.FC<IndexProps> = ({}) => {
 
   return (
     <React.Fragment>
-      <div className="grid grid-cols-1 gap-x-4 gap-y-16 justify-items-center mt-8 md:mt-0 md:gap-y-32 md:grid-cols-4 md:grid">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-16 justify-items-center mt-8 md:mt-0 lg:gap-y-32 lg:grid-cols-4 lg:grid xl:grid xl:grid-cols-6">
         {moviesList?.map((item: any) => (
           <MovieCard
             key={`movie-${item.id}`}
