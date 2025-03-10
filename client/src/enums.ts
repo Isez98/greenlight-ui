@@ -1,4 +1,4 @@
-enum HTTPMethods {
+export enum HTTPMethods {
   GET = 'GET',
   POST = 'POST',
   PATCH = 'PATCH',
@@ -6,4 +6,9 @@ enum HTTPMethods {
   DELETE = 'DELETE',
 }
 
-export default HTTPMethods
+export enum BannerType {
+  error,
+  info,
+  warning,
+  success,
+}

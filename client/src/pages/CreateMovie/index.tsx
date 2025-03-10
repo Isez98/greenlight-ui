@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAPI } from '../../utils'
-import HTTPMethods from '../../enums'
+import { BannerType, HTTPMethods } from '../../enums'
 import { Formik } from 'formik'
 import Wrapper from '../../components/Wrapper/index'
 import { PageFrame } from '../../components/PageFrame'
 import { useNavigate } from 'react-router-dom'
 import { MovieForm } from '../../components/MovieForm'
+import { Button } from '../../components/Button'
+import { Banner } from '../../components/Banner'
 
 interface CreateMovieProps {}
 
 const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
   let navigate = useNavigate()
-  const [formData, setFormData] = useState<any>(null)
-  const { queryData: createMovieRes = '', refetch } = useAPI(
+  const [formData, setFormData] = useState<{
+    year: number
+    title: string
+    runtime: string
+    genres: string[]
+  }>({ year: 2025, title: '', runtime: '60 mins', genres: [] })
+  const [bannerMessage, setBannerMessage] = useState('')
+  const { queryData = '', refetch } = useAPI(
     HTTPMethods.POST,
     '/v1/movies',
     formData,
@@ -20,46 +28,46 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
     false,
   )
 
-  useEffect(() => {
-    if (formData !== null) {
-      refetch()
-    }
-  }, [formData])
-
-  useEffect(() => {
-    if (createMovieRes?.movie) {
-      navigate('/list')
-    }
-  }, [createMovieRes])
-
   return (
     <React.Fragment>
-      <Wrapper variant="regular">
+      <Wrapper>
+        <Banner
+          type={BannerType.error}
+          text={bannerMessage}
+          setText={setBannerMessage}
+        />
         <Formik
-          initialValues={{ title: '', year: 2025, runtime: 60, genres: [] }}
-          onSubmit={async (values) => {
-            const refinedVals = {
-              ...values,
-              runtime: `${values.runtime} mins`,
-              genres: values.genres.map(
-                (genre: { label: string; value: string }) => {
-                  return genre.value
-                },
-              ),
-            }
-            setFormData(refinedVals)
+          initialValues={{
+            title: '',
+            year: 2025,
+            runtime: '60 mins',
+            genres: [],
+          }}
+          onSubmit={async (values, { setErrors }) => {
+            refetch().then((resp) => {
+              if (
+                typeof resp?.data?.error === 'object' &&
+                resp?.data?.error !== null
+              ) {
+                setErrors(resp.data.error as any)
+              } else if (resp?.data?.error) {
+                setBannerMessage(resp.data.error)
+              } else {
+                navigate('/list')
+              }
+            })
           }}
         >
-          {({ isSubmitting, setFieldValue }: any) => {
+          {({ isSubmitting }: any) => {
             return (
-              <MovieForm setFieldValue={setFieldValue}>
-                <button
-                  className="px-4 py-2 font-bold text-white bg-blue-500 rounded focus:shadow-outline hover:bg-blue-700 focus:outline-none"
+              <MovieForm formData={formData} setFormData={setFormData}>
+                <Button
+                  className="px-4 py-2 "
                   type="submit"
                   onClick={() => isSubmitting}
                 >
                   Submit
-                </button>
+                </Button>
               </MovieForm>
             )
           }}

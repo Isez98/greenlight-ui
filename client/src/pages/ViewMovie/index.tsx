@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import HTTPMethods from '../../enums'
+import { BannerType, HTTPMethods } from '../../enums'
 import { useAPI } from '../../utils'
 import Wrapper from '../../components/Wrapper/index'
 import Tag from '../../components/Tag/index'
@@ -10,6 +10,7 @@ import EventModal from '../../components/Modal'
 import { useClickAway } from '@uidotdev/usehooks'
 import { MovieForm } from '../../components/MovieForm'
 import { Formik } from 'formik'
+import { Banner } from '../../components/Banner'
 
 interface IMovie {
   id: number
@@ -21,7 +22,13 @@ interface IMovie {
 
 const ViewMovie = ({}) => {
   let navigate = useNavigate()
-  const [formData, setFormData] = useState<any>(null)
+  const [bannerMessage, setBannerMessage] = useState('')
+  const [formData, setFormData] = useState<{
+    year: number
+    title: string
+    runtime: string
+    genres: string[]
+  }>({ year: 2025, title: '', runtime: '60 mins', genres: [] })
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const { id } = useParams()
@@ -32,7 +39,7 @@ const ViewMovie = ({}) => {
     runtime: '0',
     genres: [],
   })
-  const { queryData: movie = '', refetch: getRefetch } = useAPI(
+  const { queryData: movie = '' } = useAPI(
     HTTPMethods.GET,
     `/v1/movies/${id}`,
     null,
@@ -60,8 +67,13 @@ const ViewMovie = ({}) => {
   useEffect(() => {
     if (movie?.movie) {
       setMovieData(movie?.movie)
+      setFormData({
+        title: movie?.movie.title,
+        year: movie?.movie.year,
+        runtime: movie?.movie.runtime,
+        genres: movie?.movie.genres,
+      })
     }
-    console.log(movie)
   }, [movie])
 
   useEffect(() => {
@@ -70,27 +82,14 @@ const ViewMovie = ({}) => {
     }
   }, [deleteMovie])
 
-  useEffect(() => {
-    if (formData !== null) {
-      updateRefetch()
-    }
-  }, [formData])
-
-  useEffect(() => {
-    if (updateMovie?.movie) {
-      getRefetch().then((res) => {
-        if (res.data) {
-          setMovieData(res.data?.movie)
-        }
-      })
-      setShowEdit(false)
-      setFormData(null)
-    }
-  }, [updateMovie])
-
   return (
     <React.Fragment>
       <Wrapper>
+        <Banner
+          type={BannerType.error}
+          text={bannerMessage}
+          setText={setBannerMessage}
+        />
         {showEdit ? (
           <React.Fragment>
             <Formik
@@ -105,22 +104,26 @@ const ViewMovie = ({}) => {
                   }
                 }),
               }}
-              onSubmit={async (values) => {
-                const refinedVals = {
-                  ...values,
-                  runtime: `${values.runtime} mins`,
-                  genres: values.genres.map(
-                    (genre: { label: string; value: string }) => {
-                      return genre.value
-                    },
-                  ),
-                }
-                setFormData(refinedVals)
+              onSubmit={async (values, { setErrors }) => {
+                updateRefetch().then((resp) => {
+                  if (
+                    typeof resp?.data?.error === 'object' &&
+                    resp?.data?.error !== null
+                  ) {
+                    setErrors(resp.data.error as any)
+                  } else if (resp?.data?.error) {
+                    setBannerMessage(resp.data.error)
+                  } else {
+                    setMovieData(resp.data?.movie)
+                    setShowEdit(false)
+                    // setFormData({})
+                  }
+                })
               }}
             >
-              {({ isSubmitting, setFieldValue }: any) => {
+              {({ isSubmitting }: any) => {
                 return (
-                  <MovieForm setFieldValue={setFieldValue}>
+                  <MovieForm formData={formData} setFormData={setFormData}>
                     <div className="flex w-100 justify-between">
                       <button onClick={() => setShowEdit(false)}>Cancel</button>
                       <button

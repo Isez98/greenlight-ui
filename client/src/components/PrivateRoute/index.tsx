@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { protectedRoutes, useAPI } from '../../utils'
 import { PageLoader } from '../PageLoader/index'
-import HTTPMethods from '../../enums'
+import { HTTPMethods } from '../../enums'
 
 // deno-lint-ignore no-empty-interface
 interface IPrivateRouteProps extends React.HTMLAttributes<HTMLBodyElement> {}
