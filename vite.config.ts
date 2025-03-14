@@ -1,20 +1,18 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import deno from "@deno/vite-plugin";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import deno from '@deno/vite-plugin'
 
-import "react";
-import "react-dom";
+import 'react'
+import 'react-dom'
 
 export default defineConfig({
-  root: "./client",
+  root: './client',
   server: {
     port: 3000,
   },
-  plugins: [
-    react(),
-    deno(),
-  ],
+  plugins: [react(), deno()],
+  base: './',
   optimizeDeps: {
-    include: ["react/jsx-runtime"],
+    include: ['react/jsx-runtime'],
   },
-});
+})
