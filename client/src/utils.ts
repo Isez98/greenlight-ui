@@ -78,7 +78,7 @@ export const useAPI: IUseAPI = (
 
       queryFn: async () => {
         try {
-          const res = await fetch(`http://localhost:4000${endpoint}`, {
+          const res = await fetch(`http://164.92.115.211${endpoint}`, {
             method: method,
             body: body !== null ? JSON.stringify(body) : null,
             headers: reqHeaders,

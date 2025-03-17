@@ -21,7 +21,11 @@ router.get('(.*)', async (ctx, next) => {
 
 export const app = new Application()
 
-app.use(oakCors())
+app.use(
+  oakCors({
+    origin: 'http://localhost:3000',
+  }),
+)
 app.use(router.routes())
 app.use(router.allowedMethods())
 app.use(

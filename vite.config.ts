@@ -9,6 +9,8 @@ export default defineConfig({
   root: './client',
   server: {
     port: 3000,
+    host: '0.0.0.0',
+    origin: 'http://localhost:3000',
   },
   plugins: [react(), deno()],
   base: './',
