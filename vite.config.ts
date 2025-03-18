@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     port: 3000,
     host: '0.0.0.0',
-    origin: 'http://localhost:3000',
+    origin: 'https://greenlight.isez.dev',
   },
   plugins: [react(), deno()],
   base: './',

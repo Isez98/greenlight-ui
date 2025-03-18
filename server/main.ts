@@ -23,7 +23,7 @@ export const app = new Application()
 
 app.use(
   oakCors({
-    origin: 'http://localhost:3000',
+    origin: 'https://greenlight.isez.dev',
   }),
 )
 app.use(router.routes())

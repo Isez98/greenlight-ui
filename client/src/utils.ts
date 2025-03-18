@@ -78,7 +78,7 @@ export const useAPI: IUseAPI = (
 
       queryFn: async () => {
         try {
-          const res = await fetch(`http://164.92.115.211${endpoint}`, {
+          const res = await fetch(`https://greenlight.isez.dev${endpoint}`, {
             method: method,
             body: body !== null ? JSON.stringify(body) : null,
             headers: reqHeaders,
@@ -127,7 +127,7 @@ export const setCookie = (name: string, value: string, days: number) => {
   } else {
     var expires = ''
   }
-  document.cookie = `${name}=${value}${expires}; Domain=localhost; Path=/; Secure;'`
+  document.cookie = `${name}=${value}${expires}; Domain=.greenlight.isez.dev; Path=/; Secure;'`
 }
 
 export const getCookie = (name: string) => {
