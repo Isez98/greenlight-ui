@@ -1,25 +1,14 @@
 import { Application } from '@oak/oak/application'
 import { Router } from '@oak/oak/router'
 import { oakCors } from '@tajpouria/cors'
-import * as path from 'jsr:@std/path'
+import path from 'node:path'
 import routeStaticFilesFrom from './util/routeStaticFilesFrom.ts'
-const moduleDir = path.dirname(path.fromFileUrl(import.meta.url))
+import fs from 'node:fs'
 
-const publicDir = path.join(moduleDir, '../client/dist')
-
-function getPublicFile(...filePath: string[]): Promise<Uint8Array> {
-  return Deno.readFile(path.join(publicDir, ...filePath))
-}
-
-const router = new Router()
-
-router.get('(.*)', async (ctx, next) => {
-  ctx.response.body = await getPublicFile('/index.html')
-
-  await next()
-})
-
+const __dirname = import.meta.dirname
+const buildPath = path.join(__dirname, '../client/dist')
 export const app = new Application()
+const router = new Router()
 
 app.use(
   oakCors({
@@ -34,6 +23,12 @@ app.use(
     `${Deno.cwd()}/client/public`,
   ]),
 )
+
+app.use(async (ctx, next) => {
+  ctx.type = 'html'
+  ctx.request.path = '/'
+  ctx.response.body = fs.readFileSync(`${buildPath}/index.html`)
+})
 
 if (import.meta.main) {
   console.log('Server listening on port http://localhost:3000')
