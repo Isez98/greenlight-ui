@@ -24,9 +24,7 @@ app.use(
   ]),
 )
 
-app.use(async (ctx, next) => {
-  ctx.type = 'html'
-  ctx.request.path = '/'
+app.use(async (ctx) => {
   ctx.response.body = fs.readFileSync(`${buildPath}/index.html`)
 })
 

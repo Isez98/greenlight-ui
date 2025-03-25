@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { protectedRoutes, useAPI } from '../../utils'
+import { protectedRoutes, titles, useAPI } from '../../utils'
 import { PageLoader } from '../PageLoader/index'
 import { HTTPMethods } from '../../enums'
 
@@ -18,6 +18,10 @@ export const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
     null,
     'valid',
   )
+
+  useEffect(() => {
+    document.title = titles[location.pathname] ?? 'Greenlight'
+  }, [location])
 
   useEffect(() => {
     if (typeof valid?.valid !== 'undefined') {

@@ -13,7 +13,7 @@ export default defineConfig({
     origin: 'https://greenlight.isez.dev',
   },
   plugins: [react(), deno()],
-  base: './',
+  base: '/',
   optimizeDeps: {
     include: ['react/jsx-runtime'],
   },

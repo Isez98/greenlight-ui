@@ -170,3 +170,10 @@ export const toErrorMap = (errors: FieldError[]) => {
 
   return errorMap
 }
+
+export const titles: any = {
+  '/login': 'Login',
+  '/create-movie': 'Create Movie',
+  '/account': 'Account',
+  '/list': 'Movie List',
+}

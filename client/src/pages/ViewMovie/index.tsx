@@ -66,6 +66,8 @@ const ViewMovie = ({}) => {
 
   useEffect(() => {
     if (movie?.movie) {
+      document.title = movie?.movie.title
+
       setMovieData(movie?.movie)
       setFormData({
         title: movie?.movie.title,
@@ -116,7 +118,6 @@ const ViewMovie = ({}) => {
                   } else {
                     setMovieData(resp.data?.movie)
                     setShowEdit(false)
-                    // setFormData({})
                   }
                 })
               }}
