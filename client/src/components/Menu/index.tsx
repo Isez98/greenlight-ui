@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useClickAway } from '@uidotdev/usehooks'
+import { getCookie } from '../../utils';
 
 interface MenuProps extends React.HTMLAttributes<HTMLDivElement> {
-  items: { title: string; className?: string; onClick?: () => void }[]
+  items: { title: string; className?: string; onClick?: () => void; authRequired: boolean }[]
 }
 
 export const Menu: React.FC<MenuProps> = ({ items, children }) => {
@@ -18,7 +19,7 @@ export const Menu: React.FC<MenuProps> = ({ items, children }) => {
   }
 
   return (
-    <div className="flex justify-end">
+   <div className="flex justify-end">
       <div className="absolute" onClick={handleOpenModal}>
         {children}
       </div>
@@ -27,13 +28,13 @@ export const Menu: React.FC<MenuProps> = ({ items, children }) => {
           <ul className="bg-slate-500 rounded-lg border overflow-auto hover:cursor-pointer">
             {items.map((item, index) => {
               return (
-                <li
+                item.authRequired && getCookie('auth') === undefined ? <></> : (<li
                   key={index}
                   className={` ${item.className ? item.className : ''}`}
                   onClick={item.onClick}
                 >
                   {item.title}
-                </li>
+                </li>)
               )
             })}
           </ul>

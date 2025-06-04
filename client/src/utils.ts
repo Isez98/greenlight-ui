@@ -78,7 +78,7 @@ export const useAPI: IUseAPI = (
 
       queryFn: async () => {
         try {
-          const res = await fetch(`https://greenlight.isez.dev${endpoint}`, {
+          const res = await fetch(`${import.meta.env.VITE_BACKEND_API_ENDPOINT}${endpoint}`, {
             method: method,
             body: body !== null ? JSON.stringify(body) : null,
             headers: reqHeaders,
@@ -127,7 +127,7 @@ export const setCookie = (name: string, value: string, days: number) => {
   } else {
     var expires = ''
   }
-  document.cookie = `${name}=${value}${expires}; Domain=.greenlight.isez.dev; Path=/; Secure;'`
+  document.cookie = `${name}=${value}${expires}; Domain=${import.meta.env.VITE_COOKIE_DOMAIN}; Path=/; Secure;'`
 }
 
 export const getCookie = (name: string) => {
@@ -145,9 +145,7 @@ export const deleteCookie = (name: string) => {
 }
 
 export const protectedRoutes = [
-  '/list',
   '/create-movie',
-  '/view-movie',
   '/account',
 ]
 

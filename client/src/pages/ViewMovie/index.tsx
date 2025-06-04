@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { BannerType, HTTPMethods } from '../../enums'
-import { useAPI } from '../../utils'
+import { getCookie, useAPI } from '../../utils'
 import Wrapper from '../../components/Wrapper/index'
 import Tag from '../../components/Tag/index'
 import { Button } from '../../components/Button/index'
@@ -152,12 +152,12 @@ const ViewMovie = ({}) => {
                 )
               })}
             </div>
-            <div className="flex justify-between mt-8 w-100">
+            {getCookie('auth') === undefined ? <></> : (<div className="flex justify-between mt-8 w-100">
               <Button onClick={() => setShowEdit(true)}>Edit</Button>
               <Button onClick={() => setShowModal(true)} danger>
                 Delete
               </Button>
-            </div>
+            </div>)}
           </React.Fragment>
         )}
       </Wrapper>
