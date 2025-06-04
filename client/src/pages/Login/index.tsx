@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { setCookie, useAPI } from '../../utils'
 import { BannerType, HTTPMethods } from '../../enums'
@@ -15,7 +15,7 @@ export const Login = ({}) => {
   }>({ email: '', password: '' })
   const [bannerMessage, setBannerMessage] = useState('')
 
-  const { queryData: loginRes = '', refetch } = useAPI(
+  const { refetch: userLogin } = useAPI(
     HTTPMethods.POST,
     '/v1/tokens/authentication',
     credentials,
@@ -33,7 +33,7 @@ export const Login = ({}) => {
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
-          refetch().then((resp) => {
+          userLogin().then((resp) => {
             if (
               typeof resp?.data?.error === 'object' &&
               resp?.data?.error !== null
@@ -79,15 +79,18 @@ export const Login = ({}) => {
                   value={credentials.password}
                 />
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-center items-center">
                 <button
                   className="px-4 py-2 font-bold text-white bg-blue-500 rounded focus:shadow-outline hover:bg-blue-700 focus:outline-none"
                   type="submit"
                   onClick={() => isSubmitting}
                 >
                   Login
-                </button>
+                </button>  
               </div>
+              <p className='w-100 text-center mt-5'><a className='hover:cursor-pointer' onClick={() => {
+                  navigate('/list')
+              }}>Continue as guest</a></p>
             </Form>
           )
         }}

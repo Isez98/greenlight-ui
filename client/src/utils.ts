@@ -145,9 +145,7 @@ export const deleteCookie = (name: string) => {
 }
 
 export const protectedRoutes = [
-  '/list',
   '/create-movie',
-  '/view-movie',
   '/account',
 ]
 

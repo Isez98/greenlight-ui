@@ -12,9 +12,9 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
   let navigate = useNavigate()
 
   return (
-    <div className="mb-8 w-100 px-6 py-3 bg-indigo-800 grid grid-cols-3">
+    <div className="mb-8 w-100 px-6 py-3 bg-indigo-800 grid grid-cols-3 min-h-16">
       <div className="flex col-span-2">
-        <NavButton title="Home" value="/list" currentPage={location.pathname} />
+        <NavButton title="Home" value="/list" currentPage={location.pathname} authRequired={false} />
         <NavButton
           title="Add"
           value="/create-movie"
@@ -27,6 +27,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
             {
               title: 'Account',
               className: 'px-3 py-1 hover:bg-slate-700',
+              authRequired: true,
               onClick: () => {
                 navigate('/account')
               },
@@ -34,6 +35,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
             {
               title: 'Signout',
               className: 'px-3 py-1 hover:bg-red-600',
+              authRequired: false,
               onClick: () => {
                 deleteCookie('auth')
                 window.location.reload()

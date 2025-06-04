@@ -1,16 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getCookie } from '../../utils'
 
 interface NavButtonProps {
   title: string
   value: string
   currentPage: string
+  authRequired?: boolean
 }
 
 export const NavButton: React.FC<NavButtonProps> = ({
   title,
   value,
   currentPage,
+  authRequired = true,
 }) => {
   let navigate = useNavigate()
 
@@ -21,7 +24,7 @@ export const NavButton: React.FC<NavButtonProps> = ({
   }
 
   return (
-    <div
+    authRequired && getCookie('auth') === undefined ? <></> : (<div
       onClick={handleOnClick}
       className={`px-3 py-2 mx-3 hover:cursor-pointer rounded-md ${
         value === currentPage
@@ -30,6 +33,6 @@ export const NavButton: React.FC<NavButtonProps> = ({
       }`}
     >
       {title}
-    </div>
+    </div>)
   )
 }
