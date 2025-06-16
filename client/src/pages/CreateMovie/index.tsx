@@ -18,9 +18,10 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
     title: string
     runtime: string
     genres: string[]
-  }>({ year: 2025, title: '', runtime: '60 mins', genres: [] })
+    description: string
+  }>({ year: 2025, title: '', runtime: '60 mins', genres: [], description: '' })
   const [bannerMessage, setBannerMessage] = useState('')
-  const { queryData = '', refetch } = useAPI(
+  const { refetch } = useAPI(
     HTTPMethods.POST,
     '/v1/movies',
     formData,
@@ -42,6 +43,7 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
             year: 2025,
             runtime: '60 mins',
             genres: [],
+            description: '',
           }}
           onSubmit={async (values, { setErrors }) => {
             refetch().then((resp) => {

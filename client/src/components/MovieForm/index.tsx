@@ -9,6 +9,7 @@ interface MovieFormProps extends React.HTMLAttributes<HTMLDivElement> {
     title: string
     runtime: string
     genres: string[]
+    description: string
   }
   setFormData: React.Dispatch<
     React.SetStateAction<{
@@ -16,6 +17,7 @@ interface MovieFormProps extends React.HTMLAttributes<HTMLDivElement> {
       title: string
       runtime: string
       genres: string[]
+      description: string
     }>
   >
 }
@@ -79,7 +81,7 @@ export const MovieForm: React.FC<MovieFormProps> = ({
           <InputField
             name="genres"
             label="Genres"
-            multiselect
+            component="multiselect"
             onChange={(genre: any) =>
               setFormData({
                 ...formData,
@@ -96,6 +98,20 @@ export const MovieForm: React.FC<MovieFormProps> = ({
                 ]
               }) as any
             }
+          />
+        </div>
+        <div className="mb-6">
+          <InputField
+            name="description"
+            label="Description"
+            component="textarea"
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                description: e.target.value,
+              })
+            }
+            value={formData.description}
           />
         </div>
         {children}

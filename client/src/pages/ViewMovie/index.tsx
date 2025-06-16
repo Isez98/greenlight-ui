@@ -18,6 +18,7 @@ interface IMovie {
   year: number
   runtime: string
   genres: string[]
+  description: string
 }
 
 const ViewMovie = ({}) => {
@@ -28,7 +29,8 @@ const ViewMovie = ({}) => {
     title: string
     runtime: string
     genres: string[]
-  }>({ year: 2025, title: '', runtime: '60 mins', genres: [] })
+    description: string
+  }>({ year: 2025, title: '', runtime: '60 mins', genres: [], description: '' })
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const { id } = useParams()
@@ -38,6 +40,7 @@ const ViewMovie = ({}) => {
     year: 0,
     runtime: '0',
     genres: [],
+    description: '',
   })
   const { queryData: movie = '' } = useAPI(
     HTTPMethods.GET,
@@ -52,7 +55,7 @@ const ViewMovie = ({}) => {
     'deleteMovie',
     false,
   )
-  const { queryData: updateMovie = '', refetch: updateRefetch } = useAPI(
+  const { refetch: updateRefetch } = useAPI(
     HTTPMethods.PATCH,
     `/v1/movies/${id}`,
     formData,
@@ -74,6 +77,7 @@ const ViewMovie = ({}) => {
         year: movie?.movie.year,
         runtime: movie?.movie.runtime,
         genres: movie?.movie.genres,
+        description: movie?.movie.description,
       })
     }
   }, [movie])
@@ -105,6 +109,7 @@ const ViewMovie = ({}) => {
                     value: genre,
                   }
                 }),
+                description: movieData?.description,
               }}
               onSubmit={async (values, { setErrors }) => {
                 updateRefetch().then((resp) => {
@@ -152,12 +157,19 @@ const ViewMovie = ({}) => {
                 )
               })}
             </div>
-            {getCookie('auth') === undefined ? <></> : (<div className="flex justify-between mt-8 w-100">
-              <Button onClick={() => setShowEdit(true)}>Edit</Button>
-              <Button onClick={() => setShowModal(true)} danger>
-                Delete
-              </Button>
-            </div>)}
+            <div className="w-100">
+              <p className="text-justify">{movieData?.description}</p>
+            </div>
+            {getCookie('auth') === undefined ? (
+              <></>
+            ) : (
+              <div className="flex justify-between mt-8 w-100">
+                <Button onClick={() => setShowEdit(true)}>Edit</Button>
+                <Button onClick={() => setShowModal(true)} danger>
+                  Delete
+                </Button>
+              </div>
+            )}
           </React.Fragment>
         )}
       </Wrapper>
