@@ -10,6 +10,7 @@ interface MovieFormProps extends React.HTMLAttributes<HTMLDivElement> {
     runtime: string
     genres: string[]
     description: string
+    poster: File | null
   }
   setFormData: React.Dispatch<
     React.SetStateAction<{
@@ -18,6 +19,7 @@ interface MovieFormProps extends React.HTMLAttributes<HTMLDivElement> {
       runtime: string
       genres: string[]
       description: string
+      poster: File | null
     }>
   >
 }
@@ -112,6 +114,23 @@ export const MovieForm: React.FC<MovieFormProps> = ({
               })
             }
             value={formData.description}
+          />
+        </div>
+        <div className="mb-6">
+          <InputField
+            className="bg-white"
+            label="Poster"
+            name="poster"
+            accept="image/*"
+            multiple={false}
+            type="file"
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                poster: e.target?.files?.[0] || null,
+              })
+            }
+            // value={formData.poster as any}
           />
         </div>
         {children}

@@ -17,6 +17,7 @@ export const InputField: React.FC<InputFieldProps> = ({
   label,
   size: _,
   component = 'normal',
+  className,
   options = [{}],
   ...props
 }) => {
@@ -33,7 +34,7 @@ export const InputField: React.FC<InputFieldProps> = ({
             options={options}
             {...field}
             {...(props as StateManagedSelect)}
-            className={`focus:shadow-outline w-full appearance-none rounded border border-gray-300 py-2 px-3 leading-tight text-gray-700 shadow disabled:bg-gray-200
+            className={`${className} focus:shadow-outline w-full appearance-none rounded border border-gray-300 py-2 px-3 leading-tight text-gray-700 shadow disabled:bg-gray-200
         ${error ? 'border-red-500' : ''}`}
             id={field.name}
           />
@@ -43,7 +44,7 @@ export const InputField: React.FC<InputFieldProps> = ({
           <textarea
             {...field}
             {...(props as InputHTMLAttributes<HTMLTextAreaElement>)}
-            className={`focus:shadow-outline w-full appearance-none rounded border border-gray-300 py-2 px-3 leading-tight text-gray-700 shadow disabled:bg-gray-200
+            className={`${className} focus:shadow-outline w-full appearance-none rounded border border-gray-300 py-2 px-3 leading-tight text-gray-700 shadow disabled:bg-gray-200
         ${error ? 'border-red-500' : ''}`}
             id={field.name}
           />
@@ -53,7 +54,7 @@ export const InputField: React.FC<InputFieldProps> = ({
           <input
             {...field}
             {...props}
-            className={`focus:shadow-outline w-full appearance-none rounded border border-gray-300 py-2 px-3 leading-tight text-gray-700 shadow disabled:bg-gray-200
+            className={`${className} focus:shadow-outline w-full appearance-none rounded border border-gray-300 py-2 px-3 leading-tight text-gray-700 shadow disabled:bg-gray-200
         ${error ? 'border-red-500' : ''}`}
             id={field.name}
           />

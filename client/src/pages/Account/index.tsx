@@ -13,12 +13,9 @@ const Account: React.FC<AccountProps> = ({}) => {
     email: '',
     activated: false,
   })
-  const { queryData: userData = '' } = useAPI(
-    HTTPMethods.GET,
-    '/v1/users',
-    null,
-    'moviesList',
-  )
+  const { queryData: userData = '' } = useAPI(HTTPMethods.GET, '/v1/users', {
+    queryKey: 'moviesList',
+  })
 
   useEffect(() => {
     if (userData?.user) {

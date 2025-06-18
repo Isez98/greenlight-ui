@@ -8,12 +8,17 @@ import {
 import { HTTPMethods } from './enums'
 import { useNavigate } from 'react-router-dom'
 
+interface IUseAPIOptions {
+  body?: object | null
+  queryKey?: string
+  enabled?: boolean
+  contentType?: 'application/json' | 'multipart/form-data'
+}
+
 type IUseAPI = (
   method: HTTPMethods,
   endpoint: string,
-  body?: object | null,
-  queryKey?: string,
-  enabled?: boolean,
+  options?: IUseAPIOptions,
 
   // deno-lint-ignore no-explicit-any
 ) => {
@@ -44,9 +49,12 @@ export type Scalars = {
 export const useAPI: IUseAPI = (
   method,
   endpoint,
-  body = null,
-  queryKey = 'data',
-  enabled = true,
+  options = {
+    body: null,
+    queryKey: 'data',
+    contentType: 'application/json',
+    enabled: true,
+  },
 ) => {
   let navigate = useNavigate()
   const [queryData, setData] = useState<any>(null)
@@ -55,7 +63,7 @@ export const useAPI: IUseAPI = (
   )
   const [error, setError] = useState(null)
   const reqHeaders = new Headers()
-  reqHeaders.append('Content-Type', 'application/json')
+  reqHeaders.append('Content-Type', options.contentType!)
 
   const auth_token = getCookie('auth')
   if (typeof auth_token !== 'undefined') {
@@ -74,15 +82,18 @@ export const useAPI: IUseAPI = (
 
   const { data, refetch } = useQuery(
     {
-      queryKey: [`${queryKey}`],
+      queryKey: [`${options.queryKey}`],
 
       queryFn: async () => {
         try {
-          const res = await fetch(`${import.meta.env.VITE_BACKEND_API_ENDPOINT}${endpoint}`, {
-            method: method,
-            body: body !== null ? JSON.stringify(body) : null,
-            headers: reqHeaders,
-          })
+          const res = await fetch(
+            `${import.meta.env.VITE_BACKEND_API_ENDPOINT}${endpoint}`,
+            {
+              method: method,
+              body: options.body !== null ? JSON.stringify(options.body) : null,
+              headers: reqHeaders,
+            },
+          )
           const dataResponse = await res.json()
 
           if (!res.ok) {
@@ -100,7 +111,7 @@ export const useAPI: IUseAPI = (
         }
       },
       refetchOnWindowFocus: false,
-      enabled,
+      enabled: options.enabled,
       gcTime: 30 * 1000,
     },
     queryClient,
@@ -144,10 +155,7 @@ export const deleteCookie = (name: string) => {
   setCookie(name, '', -1)
 }
 
-export const protectedRoutes = [
-  '/create-movie',
-  '/account',
-]
+export const protectedRoutes = ['/create-movie', '/account']
 
 export const genreOptions: { value: string; label: string }[] = [
   { value: 'action', label: 'Action' },

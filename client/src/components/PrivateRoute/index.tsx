@@ -15,8 +15,9 @@ export const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
   const { queryData: valid = '', loading } = useAPI(
     HTTPMethods.GET,
     '/v1/tokens/verify',
-    null,
-    'valid',
+    {
+      queryKey: 'valid',
+    },
   )
 
   useEffect(() => {

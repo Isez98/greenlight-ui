@@ -10,12 +10,9 @@ interface IndexProps {}
 const Index: React.FC<IndexProps> = ({}) => {
   let navigate = useNavigate()
   const [moviesList, setMoviesList] = useState([])
-  const { queryData: movies = '' } = useAPI(
-    HTTPMethods.GET,
-    '/v1/movies',
-    null,
-    'moviesList',
-  )
+  const { queryData: movies = '' } = useAPI(HTTPMethods.GET, '/v1/movies', {
+    queryKey: 'moviesList',
+  })
 
   useEffect(() => {
     setMoviesList(movies?.movies)

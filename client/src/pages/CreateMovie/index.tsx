@@ -19,15 +19,22 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
     runtime: string
     genres: string[]
     description: string
-  }>({ year: 2025, title: '', runtime: '60 mins', genres: [], description: '' })
+    poster: File | null
+  }>({
+    year: 2025,
+    title: '',
+    runtime: '60 mins',
+    genres: [],
+    description: '',
+    poster: null,
+  })
   const [bannerMessage, setBannerMessage] = useState('')
-  const { refetch } = useAPI(
-    HTTPMethods.POST,
-    '/v1/movies',
-    formData,
-    'createMovie',
-    false,
-  )
+  const { refetch } = useAPI(HTTPMethods.POST, '/v1/movies', {
+    body: formData,
+    queryKey: 'createMovie',
+    enabled: false,
+    contentType: 'multipart/form-data',
+  })
 
   return (
     <React.Fragment>
@@ -44,6 +51,7 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
             runtime: '60 mins',
             genres: [],
             description: '',
+            poster: null,
           }}
           onSubmit={async (values, { setErrors }) => {
             refetch().then((resp) => {

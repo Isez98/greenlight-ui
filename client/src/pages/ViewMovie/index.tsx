@@ -19,6 +19,7 @@ interface IMovie {
   runtime: string
   genres: string[]
   description: string
+  poster: File | null
 }
 
 const ViewMovie = ({}) => {
@@ -30,7 +31,15 @@ const ViewMovie = ({}) => {
     runtime: string
     genres: string[]
     description: string
-  }>({ year: 2025, title: '', runtime: '60 mins', genres: [], description: '' })
+    poster: File | null
+  }>({
+    year: 2025,
+    title: '',
+    runtime: '60 mins',
+    genres: [],
+    description: '',
+    poster: null,
+  })
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const { id } = useParams()
@@ -41,26 +50,31 @@ const ViewMovie = ({}) => {
     runtime: '0',
     genres: [],
     description: '',
+    poster: null,
   })
   const { queryData: movie = '' } = useAPI(
     HTTPMethods.GET,
     `/v1/movies/${id}`,
-    null,
-    'moviesList',
+    {
+      queryKey: 'moviesList',
+    },
   )
   const { queryData: deleteMovie = '', refetch: deleteRefetch } = useAPI(
     HTTPMethods.DELETE,
     `/v1/movies/${id}`,
-    null,
-    'deleteMovie',
-    false,
+    {
+      queryKey: 'deleteMovie',
+      enabled: false,
+    },
   )
   const { refetch: updateRefetch } = useAPI(
     HTTPMethods.PATCH,
     `/v1/movies/${id}`,
-    formData,
-    'updateMovie',
-    false,
+    {
+      body: formData,
+      queryKey: 'updateMovie',
+      enabled: false,
+    },
   )
 
   const ref = useClickAway<any>((e) => {
@@ -78,6 +92,7 @@ const ViewMovie = ({}) => {
         runtime: movie?.movie.runtime,
         genres: movie?.movie.genres,
         description: movie?.movie.description,
+        poster: movie?.movie.poster,
       })
     }
   }, [movie])

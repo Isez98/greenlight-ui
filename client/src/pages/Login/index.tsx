@@ -18,9 +18,11 @@ export const Login = ({}) => {
   const { refetch: userLogin } = useAPI(
     HTTPMethods.POST,
     '/v1/tokens/authentication',
-    credentials,
-    'login',
-    false,
+    {
+      body: credentials,
+      queryKey: 'login',
+      enabled: false,
+    },
   )
 
   return (
@@ -86,11 +88,18 @@ export const Login = ({}) => {
                   onClick={() => isSubmitting}
                 >
                   Login
-                </button>  
+                </button>
               </div>
-              <p className='w-100 text-center mt-5'><a className='hover:cursor-pointer' onClick={() => {
-                  navigate('/list')
-              }}>Continue as guest</a></p>
+              <p className="w-100 text-center mt-5">
+                <a
+                  className="hover:cursor-pointer"
+                  onClick={() => {
+                    navigate('/list')
+                  }}
+                >
+                  Continue as guest
+                </a>
+              </p>
             </Form>
           )
         }}
