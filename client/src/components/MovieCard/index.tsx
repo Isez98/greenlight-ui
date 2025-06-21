@@ -2,20 +2,21 @@ import React from 'react'
 import Tag from '../Tag/index'
 
 interface MovieCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  year: number
-  runtime: string
-  genres: string[]
+  cardData: {
+    title: string
+    year: number
+    runtime: string
+    genres: string[]
+    poster: string
+  }
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({
-  title,
-  year,
-  runtime,
-  genres,
+  cardData,
   className = '',
   ...props
 }) => {
+  const { genres, runtime, title, year, poster } = cardData
   return (
     <div
       className={
@@ -25,6 +26,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       }
       {...props}
     >
+      <img src={poster} alt="theatrical poster" />
       <h2 className="text-lg font-bold underline overflow-hidden text-ellipsis">
         {title}
       </h2>

@@ -13,7 +13,8 @@ interface CreateMovieProps {}
 
 const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
   let navigate = useNavigate()
-  const [formData, setFormData] = useState<{
+  const [formData] = useState<FormData>(new FormData())
+  const [objectData, setObjectData] = useState<{
     year: number
     title: string
     runtime: string
@@ -33,7 +34,6 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
     body: formData,
     queryKey: 'createMovie',
     enabled: false,
-    contentType: 'multipart/form-data',
   })
 
   return (
@@ -54,6 +54,12 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
             poster: null,
           }}
           onSubmit={async (values, { setErrors }) => {
+            formData.append('year', objectData.year.toString())
+            formData.append('title', objectData.title)
+            formData.append('runtime', objectData.runtime)
+            formData.append('description', objectData.description)
+            formData.append('genres', JSON.stringify(objectData.genres))
+            formData.append('poster', objectData.poster!)
             refetch().then((resp) => {
               if (
                 typeof resp?.data?.error === 'object' &&
@@ -70,7 +76,7 @@ const CreateMovie: React.FC<CreateMovieProps> = ({}) => {
         >
           {({ isSubmitting }: any) => {
             return (
-              <MovieForm formData={formData} setFormData={setFormData}>
+              <MovieForm objectData={objectData} setObjectData={setObjectData}>
                 <Button
                   className="px-4 py-2 "
                   type="submit"

@@ -25,10 +25,7 @@ const Index: React.FC<IndexProps> = ({}) => {
           <MovieCard
             key={`movie-${item.id}`}
             className="hover:cursor-pointer"
-            title={item.title}
-            runtime={item.runtime}
-            year={item.year}
-            genres={item.genres}
+            cardData={item}
             onClick={() => {
               navigate(`/view-movie/${item.id}`)
             }}

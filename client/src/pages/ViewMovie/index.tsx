@@ -19,13 +19,13 @@ interface IMovie {
   runtime: string
   genres: string[]
   description: string
-  poster: File | null
+  poster: string
 }
 
 const ViewMovie = ({}) => {
   let navigate = useNavigate()
   const [bannerMessage, setBannerMessage] = useState('')
-  const [formData, setFormData] = useState<{
+  const [objectData, setObjectData] = useState<{
     year: number
     title: string
     runtime: string
@@ -50,7 +50,7 @@ const ViewMovie = ({}) => {
     runtime: '0',
     genres: [],
     description: '',
-    poster: null,
+    poster: '',
   })
   const { queryData: movie = '' } = useAPI(
     HTTPMethods.GET,
@@ -71,7 +71,7 @@ const ViewMovie = ({}) => {
     HTTPMethods.PATCH,
     `/v1/movies/${id}`,
     {
-      body: formData,
+      body: JSON.stringify(objectData),
       queryKey: 'updateMovie',
       enabled: false,
     },
@@ -86,7 +86,7 @@ const ViewMovie = ({}) => {
       document.title = movie?.movie.title
 
       setMovieData(movie?.movie)
-      setFormData({
+      setObjectData({
         title: movie?.movie.title,
         year: movie?.movie.year,
         runtime: movie?.movie.runtime,
@@ -144,7 +144,10 @@ const ViewMovie = ({}) => {
             >
               {({ isSubmitting }: any) => {
                 return (
-                  <MovieForm formData={formData} setFormData={setFormData}>
+                  <MovieForm
+                    objectData={objectData}
+                    setObjectData={setObjectData}
+                  >
                     <div className="flex w-100 justify-between">
                       <button onClick={() => setShowEdit(false)}>Cancel</button>
                       <button
@@ -172,6 +175,11 @@ const ViewMovie = ({}) => {
                 )
               })}
             </div>
+            <img
+              src={movieData?.poster}
+              alt="Theatrical release poster"
+              className="h-28"
+            />
             <div className="w-100">
               <p className="text-justify">{movieData?.description}</p>
             </div>

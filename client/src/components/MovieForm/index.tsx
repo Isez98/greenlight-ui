@@ -4,7 +4,7 @@ import InputField from '../InputField'
 import { Form } from 'formik'
 
 interface MovieFormProps extends React.HTMLAttributes<HTMLDivElement> {
-  formData: {
+  objectData: {
     year: number
     title: string
     runtime: string
@@ -12,7 +12,7 @@ interface MovieFormProps extends React.HTMLAttributes<HTMLDivElement> {
     description: string
     poster: File | null
   }
-  setFormData: React.Dispatch<
+  setObjectData: React.Dispatch<
     React.SetStateAction<{
       year: number
       title: string
@@ -26,8 +26,8 @@ interface MovieFormProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const MovieForm: React.FC<MovieFormProps> = ({
   children,
-  formData,
-  setFormData,
+  objectData,
+  setObjectData,
 }) => {
   return (
     <React.Fragment>
@@ -37,12 +37,12 @@ export const MovieForm: React.FC<MovieFormProps> = ({
             name="title"
             label="Title"
             onChange={(e) =>
-              setFormData({
-                ...formData,
+              setObjectData({
+                ...objectData,
                 title: e.target.value,
               })
             }
-            value={formData.title}
+            value={objectData.title}
           />
         </div>
         <div className="mb-4">
@@ -54,12 +54,12 @@ export const MovieForm: React.FC<MovieFormProps> = ({
             max={'2040'}
             step={'1'}
             onChange={(e) =>
-              setFormData({
-                ...formData,
+              setObjectData({
+                ...objectData,
                 year: parseInt(e.target.value),
               })
             }
-            value={formData.year.toString()}
+            value={objectData.year.toString()}
           />
         </div>
         <div className="mb-4">
@@ -71,12 +71,12 @@ export const MovieForm: React.FC<MovieFormProps> = ({
             max={'300'}
             step={'1'}
             onChange={(e) =>
-              setFormData({
-                ...formData,
+              setObjectData({
+                ...objectData,
                 runtime: `${e.target.value} mins`,
               })
             }
-            value={formData.runtime.split(' ')[0]}
+            value={objectData.runtime.split(' ')[0]}
           />
         </div>
         <div className="mb-6">
@@ -85,8 +85,8 @@ export const MovieForm: React.FC<MovieFormProps> = ({
             label="Genres"
             component="multiselect"
             onChange={(genre: any) =>
-              setFormData({
-                ...formData,
+              setObjectData({
+                ...objectData,
                 genres: genre.map((genre: { label: string; value: string }) => {
                   return genre.value
                 }),
@@ -94,7 +94,7 @@ export const MovieForm: React.FC<MovieFormProps> = ({
             }
             options={genreOptions}
             value={
-              formData.genres.map((item) => {
+              objectData.genres.map((item) => {
                 return genreOptions[
                   genreOptions.findIndex((genre) => item === genre.value)
                 ]
@@ -108,12 +108,12 @@ export const MovieForm: React.FC<MovieFormProps> = ({
             label="Description"
             component="textarea"
             onChange={(e) =>
-              setFormData({
-                ...formData,
+              setObjectData({
+                ...objectData,
                 description: e.target.value,
               })
             }
-            value={formData.description}
+            value={objectData.description}
           />
         </div>
         <div className="mb-6">
@@ -125,12 +125,12 @@ export const MovieForm: React.FC<MovieFormProps> = ({
             multiple={false}
             type="file"
             onChange={(e) =>
-              setFormData({
-                ...formData,
+              setObjectData({
+                ...objectData,
                 poster: e.target?.files?.[0] || null,
               })
             }
-            // value={formData.poster as any}
+            // value={objectData.poster as any}
           />
         </div>
         {children}

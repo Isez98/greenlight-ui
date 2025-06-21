@@ -9,10 +9,9 @@ import { HTTPMethods } from './enums'
 import { useNavigate } from 'react-router-dom'
 
 interface IUseAPIOptions {
-  body?: object | null
+  body?: string | FormData | null
   queryKey?: string
   enabled?: boolean
-  contentType?: 'application/json' | 'multipart/form-data'
 }
 
 type IUseAPI = (
@@ -52,7 +51,6 @@ export const useAPI: IUseAPI = (
   options = {
     body: null,
     queryKey: 'data',
-    contentType: 'application/json',
     enabled: true,
   },
 ) => {
@@ -63,8 +61,6 @@ export const useAPI: IUseAPI = (
   )
   const [error, setError] = useState(null)
   const reqHeaders = new Headers()
-  reqHeaders.append('Content-Type', options.contentType!)
-
   const auth_token = getCookie('auth')
   if (typeof auth_token !== 'undefined') {
     reqHeaders.append('Authorization', `Bearer ${auth_token}`)
@@ -90,7 +86,7 @@ export const useAPI: IUseAPI = (
             `${import.meta.env.VITE_BACKEND_API_ENDPOINT}${endpoint}`,
             {
               method: method,
-              body: options.body !== null ? JSON.stringify(options.body) : null,
+              body: options.body !== null ? (options.body as any) : null,
               headers: reqHeaders,
             },
           )

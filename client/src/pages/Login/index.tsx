@@ -19,7 +19,7 @@ export const Login = ({}) => {
     HTTPMethods.POST,
     '/v1/tokens/authentication',
     {
-      body: credentials,
+      body: JSON.stringify(credentials),
       queryKey: 'login',
       enabled: false,
     },
